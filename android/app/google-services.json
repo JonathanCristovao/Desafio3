@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "257144118680",
+    "project_id": "socialmidia-14d58",
+    "storage_bucket": "socialmidia-14d58.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:257144118680:android:ba24d43edda89a0be1dfed",
+        "android_client_info": {
+          "package_name": "com.example.socialmidia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "257144118680-fqqo6h47gkdqs9oivubn5t733tbn9a4j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYjxJIM-Jsm29DO_9UZNxE24ZqJMfCMpE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "257144118680-fqqo6h47gkdqs9oivubn5t733tbn9a4j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
