@@ -1,88 +1,66 @@
 import 'dart:math';
-
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:get/get.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'core/usecases/usecases.dart';
+import 'infra/infra.dart';
+import 'main/factories/factories.dart';
+import 'main/factories/pages/pages.dart';
+import 'main/factories/usecases/usecases.dart';
+import 'presentation/presenters/presenter.dart';
+import 'ui/components/components.dart';
+import 'ui/pages/pages.dart';
+import 'package:http/http.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  if (kDebugMode) {
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+  }
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
+  MyApp({Key? key}) : super(key: key);
+
+  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: FutureBuilder(
-            future: _fbApp,
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                print(" voce tem um erro! ${snapshot.error.toString()}");
-                return const Text("Há alguma coisa errada");
-              } else if (snapshot.hasData) {
-                return const MyHomePage(title: 'Flutter Demo Home Page');
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }));
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    DatabaseReference _testRef =
-        FirebaseDatabase.instance.reference().child("teste");
-    _testRef.set("Ola mundo ${Random().nextInt(100)}");
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+    return GetMaterialApp(
+      navigatorKey: _navigatorKey,
+      title: 'Socialmedia',
+      theme: AppTheme.lightThemeData,
+      darkTheme: AppTheme.darkThemeData,
+      themeMode: ThemeMode.system,
+      debugShowCheckedModeBanner: false,
+      defaultTransition: Transition.cupertino,
+      transitionDuration: const Duration(milliseconds: 400),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const SplashPage(),
+        '/login': (context) => makeLoginPage(),
+        '/home': (context) => HomePage(
+              presenter: GetxHomePresenter(
+                addUser: makeRemoteAddUser(),
+                firebaseAuthentication: makeFirebaseAuthenticationAdapter(),
+                loadPeople: RemoteLoadPeople(
+                  httpClient: HttpAdapter(client: Client()),
+                  url: 'https://6140bdba357db50017b3d87d.mockapi.io/people',
+                ),
+                loadUsers: makeRemoteLoadUsers(),
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+        //'/profile': (context) => ProfilePage(
+        //      presenter: StreamProfilePresenter(),
+        //     ),
+      },
     );
   }
 }
