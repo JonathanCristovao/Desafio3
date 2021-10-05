@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'core/usecases/usecases.dart';
+import 'package:socialmidia/domain/usecases/usecases.dart';
 import 'infra/infra.dart';
 import 'main/factories/factories.dart';
 import 'main/factories/pages/pages.dart';

@@ -1,4 +1,4 @@
-import 'package:socialmidia/data/usecases/usecases.dart';
+import 'package:socialmidia/domain/repository/repository.dart';
 
 class RemoteAuthentication implements Authentication {
   @override

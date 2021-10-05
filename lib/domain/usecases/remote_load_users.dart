@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:socialmidia/data/firebase/firebase.dart';
-import 'package:socialmidia/data/usecases/usecases.dart';
 import 'package:socialmidia/domain/entities/entities.dart';
+import 'package:socialmidia/domain/repository/repository.dart';
 
 class RemoteLoadUsers implements LoadUsers {
   final FirebaseCloudFirestore cloudFirestore;

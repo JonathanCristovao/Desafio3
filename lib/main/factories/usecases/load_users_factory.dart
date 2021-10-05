@@ -1,5 +1,5 @@
-import 'package:socialmidia/core/usecases/usecases.dart';
-import '../../../data/usecases/usecases.dart';
+import 'package:socialmidia/domain/repository/repository.dart';
+import 'package:socialmidia/domain/usecases/usecases.dart';
 
 import '../factories.dart';
 

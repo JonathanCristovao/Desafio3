@@ -1,7 +1,7 @@
 import 'package:socialmidia/data/http/http.dart';
 import 'package:socialmidia/data/models/models.dart';
-import 'package:socialmidia/data/usecases/usecases.dart';
 import 'package:socialmidia/domain/entities/entities.dart';
+import 'package:socialmidia/domain/repository/repository.dart';
 
 class RemoteLoadPeople implements LoadPeople {
   final HttpClient httpClient;

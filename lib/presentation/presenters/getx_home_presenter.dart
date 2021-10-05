@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:socialmidia/data/firebase/firebase.dart';
 import 'package:socialmidia/data/http/http.dart';
-import 'package:socialmidia/data/usecases/usecases.dart';
 import 'package:socialmidia/domain/entities/entities.dart';
+import 'package:socialmidia/domain/repository/repository.dart';
 import 'package:socialmidia/ui/pages/pages.dart';
 
 class GetxHomePresenter extends GetxController implements HomePresenter {

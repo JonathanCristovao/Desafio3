@@ -1,4 +1,12 @@
-export 'remote_add_user.dart';
-export 'remote_authentication.dart';
-export 'remote_load_people.dart';
-export 'remote_load_users.dart';
+import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
+import '../error/failures.dart';
+
+abstract class UseCase<Type, Params> {
+  Future<Either<Failure, Type>>? call(Params params);
+}
+
+class NoParams extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
