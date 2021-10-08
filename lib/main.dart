@@ -1,9 +1,7 @@
-import 'dart:math';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'core/usecases/usecases.dart';
@@ -57,9 +55,9 @@ class MyApp extends StatelessWidget {
                 loadUsers: makeRemoteLoadUsers(),
               ),
             ),
-        //'/profile': (context) => ProfilePage(
-        //      presenter: StreamProfilePresenter(),
-        //     ),
+        '/profile': (context) => ProfilePage(
+              presenter: StreamProfilePresenter(),
+            ),
       },
     );
   }

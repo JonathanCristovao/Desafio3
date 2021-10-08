@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:socialmidia/domain/entities/entities.dart';
+import 'package:socialmidia/presentation/presenters/presenter.dart';
+import 'package:socialmidia/ui/pages/comments/comments_page.dart';
 
 import '../pages.dart';
 
@@ -39,6 +41,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     debugPrint('AppLifecycleState: $state');
   }
 
+  final FocusNode _focusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,11 +65,63 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
       ),
       body: SafeArea(
         child: SizedBox.expand(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(24.0, 0.0, 24.0, 24.0),
+          //  child: Padding(
+          //  padding: const EdgeInsets.fromLTRB(24.0, 0.0, 24.0, 24.0),
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                Container(
+                  margin: const EdgeInsets.all(16),
+                  child: SizedBox(
+                      width: double.infinity,
+                      child: Row(
+                        children: [
+                          const CircleAvatar(),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          ElevatedButton(
+                            child: const Text("Adicione uma postagem"),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const CommentPage(),
+                                  ));
+                            },
+                          ),
+                        ],
+                      )),
+                ),
+                Container(
+                    height: 120,
+                    color: Colors.grey[350],
+                    padding: const EdgeInsets.fromLTRB(0, 80, 50, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.favorite_border,
+                              color: Colors.grey[850],
+                            )),
+                        const Text("Likes"),
+                        IconButton(
+                            onPressed: () {
+                              _focusNode.requestFocus();
+                            },
+                            icon: Icon(
+                              Icons.comment,
+                              color: Colors.grey[850],
+                            )),
+                        const Text("Comments"),
+                      ],
+                    )),
                 Expanded(
                   child: StreamBuilder<List<PersonEntity>>(
                     stream: widget.presenter.peopleStream,
@@ -97,9 +153,72 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                     },
                   ),
                 ),
+                Container(
+                  height: 60,
+                  color: Colors.grey[350],
+                  child: TextFormField(
+                    focusNode: _focusNode,
+                  ),
+                ),
               ],
             ),
           ),
+        ),
+      ),
+      bottomNavigationBar: SizedBox(
+        width: 200,
+        height: 70,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Column(
+              children: [
+                IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.photo_size_select_actual_outlined,
+                      color: Colors.grey[850],
+                    )),
+                const Text("Feed"),
+              ],
+            ),
+            Column(
+              children: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const CommentPage(),
+                          ));
+                    },
+                    icon: Icon(
+                      Icons.add_circle_outlined,
+                      color: Colors.grey[850],
+                    )),
+                const Text("Post"),
+              ],
+            ),
+            Column(
+              children: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProfilePage(
+                              presenter: StreamProfilePresenter(),
+                            ),
+                          ));
+                    },
+                    icon: Icon(
+                      Icons.account_circle_outlined,
+                      color: Colors.grey[850],
+                    )),
+                const Text("Perfil"),
+              ],
+            ),
+          ],
         ),
       ),
     );
